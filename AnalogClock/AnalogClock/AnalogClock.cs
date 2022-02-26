@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -85,15 +85,22 @@ namespace AnalogClock
             }
         }
 
-        private void soundToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            soundToolStripMenuItem.Checked = !soundToolStripMenuItem.Checked;
-        }
+        private void soundToolStripMenuItem_Click(object sender, EventArgs e) => soundToolStripMenuItem.Checked = !soundToolStripMenuItem.Checked;
 
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showToolStripMenuItem.Checked = !showToolStripMenuItem.Checked;
-            if (showToolStripMenuItem.Checked)
+            if (fullScreenToolStripMenuItem.Checked)
+            {
+                fullScreenToolStripMenuItem.Checked = false;
+                FuuScreen(false);
+            }
+            ShowBorder(showToolStripMenuItem.Checked);          
+        }
+
+        private void ShowBorder(bool show)
+        {           
+            if (show)
             {
                 edge = oldedge;
                 FormBorderStyle = FormBorderStyle.Sizable;
@@ -108,10 +115,7 @@ namespace AnalogClock
             }
         }
 
-        private void minimizeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Minimized;
-        }
+        private void minimizeToolStripMenuItem_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
 
         private void darkToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -123,7 +127,17 @@ namespace AnalogClock
         private void fullScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fullScreenToolStripMenuItem.Checked = !fullScreenToolStripMenuItem.Checked;
-            if (fullScreenToolStripMenuItem.Checked)
+            if (!showToolStripMenuItem.Checked)
+            {
+                showToolStripMenuItem.Checked = true;
+                ShowBorder(true);
+            }
+            FuuScreen(fullScreenToolStripMenuItem.Checked);          
+        }
+
+        private void FuuScreen(bool fullscreen)
+        {
+            if (fullscreen)
             {
                 //BackColor = Color.Black;
                 //dark = true;
